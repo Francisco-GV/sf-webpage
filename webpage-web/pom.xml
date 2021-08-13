@@ -5,7 +5,7 @@
     <parent>
         <artifactId>sf-webpage</artifactId>
         <groupId>com.frank</groupId>
-        <version>0.0.1</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +18,7 @@
         <dependency>
             <artifactId>webpage-data</artifactId>
             <groupId>com.frank</groupId>
-            <version>0.0.1</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
