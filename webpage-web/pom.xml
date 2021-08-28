@@ -90,23 +90,17 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory
-                    </wroManagerFactory>
-                    <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
+                    <wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
                     <wroFile>${basedir}/src/main/wro/wro.xml</wroFile>
                     <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
                     <contextFolder>${basedir}/src/main/less</contextFolder>
+                    <cssDestinationFolder>${project.build.directory}/classes/static/resources/css</cssDestinationFolder>
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.webjars</groupId>
                         <artifactId>bootstrap</artifactId>
                         <version>${webjars-bootstrap.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mockito</groupId>
-                        <artifactId>mockito-core</artifactId>
-                        <version>${mockito.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
