@@ -16,8 +16,8 @@
 
         <!-- Web dependency versions -->
         <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
-        <webjars-jquery.version>3.6.0</webjars-jquery.version>
-        <webjars-jquery-ui.version>1.12.1</webjars-jquery-ui.version>
+        <webjars-jquery.version>2.2.4</webjars-jquery.version>
+        <webjars-jquery-ui.version>1.11.4</webjars-jquery-ui.version>
         <wro4j.version>1.10.1</wro4j.version>
     </properties>
 
