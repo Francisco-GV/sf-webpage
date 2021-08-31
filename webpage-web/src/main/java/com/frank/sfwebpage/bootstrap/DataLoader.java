@@ -1,8 +1,10 @@
 package com.frank.sfwebpage.bootstrap;
 
 import com.frank.sfwebpage.model.Owner;
+import com.frank.sfwebpage.model.PetType;
 import com.frank.sfwebpage.model.Vet;
 import com.frank.sfwebpage.services.OwnerService;
+import com.frank.sfwebpage.services.PetTypeService;
 import com.frank.sfwebpage.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,15 +15,25 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
     }
 
     @Override
     public void run(String... args) {
+        PetType dogType = new PetType();
+        dogType.setName("dog");
+        petTypeService.save(dogType);
+
+        PetType catType = new PetType();
+        catType.setName("cat");
+        petTypeService.save(catType);
+
         Owner owner1 = new Owner();
         owner1.setFirstName("Michael");
         owner1.setLastName("Weston");
