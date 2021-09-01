@@ -24,4 +24,10 @@ public class VetController {
 
         return "vets/index";
     }
+
+    @RequestMapping({"/find", "/find.html"})
+    public String findVet(Model model) {
+        model.addAttribute("message", "Not implemented yet!!!");
+        return "error";
+    }
 }
