@@ -22,11 +22,7 @@ public class Owner extends Person {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private final Set<Pet> pets;
-
-    public Owner() {
-        pets = new HashSet<>();
-    }
+    private final Set<Pet> pets = new HashSet<>();
 
     public String getAddress() {
         return address;
