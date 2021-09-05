@@ -1,6 +1,10 @@
 package com.frank.sfwebpage.bootstrap;
 
-import com.frank.sfwebpage.model.*;
+import com.frank.sfwebpage.model.Owner;
+import com.frank.sfwebpage.model.Pet;
+import com.frank.sfwebpage.model.PetType;
+import com.frank.sfwebpage.model.Specialty;
+import com.frank.sfwebpage.model.Vet;
 import com.frank.sfwebpage.services.OwnerService;
 import com.frank.sfwebpage.services.PetTypeService;
 import com.frank.sfwebpage.services.SpecialtyService;
@@ -30,7 +34,9 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        loadData();
+        if (petTypeService.findAll().size() == 0) {
+            loadData();
+        }
     }
 
     private void loadData() {
@@ -58,6 +64,7 @@ public class DataLoader implements CommandLineRunner {
             pet1.setPetType(dogType);
             pet1.setBirthDate(LocalDate.of(2018, Month.APRIL, 15));
             pet1.setName("Dumbi");
+            pet1.setOwner(owner1);
 
             owner1.getPets().add(pet1);
         }
@@ -76,11 +83,13 @@ public class DataLoader implements CommandLineRunner {
             pet1.setPetType(catType);
             pet1.setBirthDate(LocalDate.of(2019, Month.OCTOBER, 2));
             pet1.setName("Shiro");
+            pet1.setOwner(owner2);
 
             Pet pet2 = new Pet();
             pet2.setPetType(catType);
             pet2.setBirthDate(LocalDate.of(2018, Month.FEBRUARY, 23));
             pet2.setName("Kuro");
+            pet2.setOwner(owner2);
 
             owner2.getPets().add(pet1);
             owner2.getPets().add(pet2);

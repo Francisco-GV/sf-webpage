@@ -22,7 +22,7 @@ public class Owner extends Person {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-    private final Set<Pet> pets = new HashSet<>();
+    private Set<Pet> pets = new HashSet<>();
 
     public String getAddress() {
         return address;
@@ -46,6 +46,10 @@ public class Owner extends Person {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public void setPets(Set<Pet> pets) {
+        this.pets = pets;
     }
 
     public Set<Pet> getPets() {

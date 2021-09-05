@@ -5,11 +5,13 @@ import com.frank.sfwebpage.services.OwnerService;
 import com.frank.sfwebpage.services.PetService;
 import com.frank.sfwebpage.services.PetTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
+@Profile("map")
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetTypeService petTypeService;
@@ -23,8 +25,10 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        // return map.entrySet().fi;
-        return null;
+        return map.values().stream()
+                .filter(owner -> owner.getLastName().equals(lastName))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
