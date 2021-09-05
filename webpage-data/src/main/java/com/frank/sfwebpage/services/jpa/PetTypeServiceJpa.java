@@ -23,11 +23,11 @@ public class PetTypeServiceJpa implements PetTypeService {
 
     @Override
     public Set<PetType> findAll() {
-        Set<PetType> PetTypes = new HashSet<>();
+        Set<PetType> petTypes = new HashSet<>();
 
-        petTypeRepository.findAll().forEach(PetTypes::add);
+        petTypeRepository.findAll().forEach(petTypes::add);
 
-        return PetTypes;
+        return petTypes;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class PetTypeServiceJpa implements PetTypeService {
     }
 
     @Override
-    public PetType save(PetType PetType) {
-        return petTypeRepository.save(PetType);
+    public PetType save(PetType petType) {
+        return petTypeRepository.save(petType);
     }
 
     @Override
-    public void delete(PetType PetType) {
-        petTypeRepository.delete(PetType);
+    public void delete(PetType petType) {
+        petTypeRepository.delete(petType);
     }
 
     @Override
