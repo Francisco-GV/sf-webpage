@@ -12,12 +12,12 @@ import java.util.Set;
 
 @Service
 @Profile("jpa")
-public class PetServiceJpa implements PetService {
+public class PetJpaService implements PetService {
 
     private final PetRepository petRepository;
 
     @Autowired
-    public PetServiceJpa(PetRepository petRepository) {
+    public PetJpaService(PetRepository petRepository) {
         this.petRepository = petRepository;
     }
 
