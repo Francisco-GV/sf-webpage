@@ -5,10 +5,12 @@ import com.frank.sfwebpage.model.Pet;
 import com.frank.sfwebpage.model.PetType;
 import com.frank.sfwebpage.model.Specialty;
 import com.frank.sfwebpage.model.Vet;
+import com.frank.sfwebpage.model.Visit;
 import com.frank.sfwebpage.services.OwnerService;
 import com.frank.sfwebpage.services.PetTypeService;
 import com.frank.sfwebpage.services.SpecialtyService;
 import com.frank.sfwebpage.services.VetService;
+import com.frank.sfwebpage.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,13 +25,16 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialtyService specialtyService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -67,6 +72,13 @@ public class DataLoader implements CommandLineRunner {
             pet1.setOwner(owner1);
 
             owner1.getPets().add(pet1);
+
+            Visit pet1Visit = new Visit();
+            pet1Visit.setPet(pet1);
+            pet1Visit.setDate(LocalDate.now());
+            pet1Visit.setDescription("Sneezy");
+
+            visitService.save(pet1Visit);
         }
 
         ownerService.save(owner1);
