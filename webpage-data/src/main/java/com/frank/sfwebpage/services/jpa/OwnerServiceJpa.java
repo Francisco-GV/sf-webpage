@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Profile({"jpa", "default"})
+@Profile("jpa")
 public class OwnerServiceJpa implements OwnerService {
 
     private final OwnerRepository ownerRepository;
