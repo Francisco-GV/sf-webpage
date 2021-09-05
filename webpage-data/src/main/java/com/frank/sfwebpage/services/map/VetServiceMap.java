@@ -4,9 +4,11 @@ import com.frank.sfwebpage.model.Vet;
 import com.frank.sfwebpage.services.SpecialtyService;
 import com.frank.sfwebpage.services.VetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile("map")
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     private final SpecialtyService specialtyService;
