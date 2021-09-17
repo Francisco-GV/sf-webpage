@@ -2,6 +2,7 @@ package com.frank.sfwebpage.controllers;
 
 import com.frank.sfwebpage.model.Owner;
 import com.frank.sfwebpage.services.OwnerService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.hamcrest.Matchers.hasSize;
 
 @ExtendWith(MockitoExtension.class)
 class OwnerControllerTest {
@@ -50,6 +49,23 @@ class OwnerControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("owners/index"))
-                .andExpect(MockMvcResultMatchers.model().attribute("owners", hasSize(num)));
+                .andExpect(MockMvcResultMatchers.model().attribute("owners", Matchers.hasSize(num)));
+    }
+
+    @Test
+    void displayOwners() throws Exception {
+        long id = 1L;
+
+        Owner owner = new Owner();
+        owner.setId(id);
+
+        Mockito.when(ownerService.findById(id)).thenReturn(owner);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownerDetails"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"))
+                .andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.notNullValue()))
+                .andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("id", Matchers.is(id))));
     }
 }
