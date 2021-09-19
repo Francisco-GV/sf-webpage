@@ -36,20 +36,44 @@ class OwnerControllerTest {
     }
 
     @Test
-    void listOwners() throws Exception {
-        Set<Owner> ownerSet = new HashSet<>();
+    void findOwners() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/find"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/findOwners"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
 
-        int num = 10;
-        for (int i = 0; i < num; i++) {
-            ownerSet.add(new Owner());
+        Mockito.verifyNoInteractions(ownerService);
+    }
+
+    @Test
+    void processFindFormReturnMany() throws Exception {
+        Set<Owner> ownerSet = new HashSet<>(2);
+        for (int i = 0; i < 2; i++) {
+            Owner owner = new Owner();
+            owner.setId((long) i + 1);
+            ownerSet.add(owner);
         }
 
-        Mockito.when(ownerService.findAll()).thenReturn(ownerSet);
+        Mockito.when(ownerService.findAllByLastName(Mockito.anyString())).thenReturn(ownerSet);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("owners/index"))
-                .andExpect(MockMvcResultMatchers.model().attribute("owners", Matchers.hasSize(num)));
+                .andExpect(MockMvcResultMatchers.view().name("owners/ownersList"))
+                .andExpect(MockMvcResultMatchers.model().attribute("owners", Matchers.hasSize(2)));
+    }
+
+    @Test
+    void processFindFormReturnOne() throws Exception {
+        long id = 1L;
+
+        Owner owner = new Owner();
+        owner.setId(id);
+
+        Mockito.when(ownerService.findAllByLastName(Mockito.anyString())).thenReturn(Set.of(owner));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/%d".formatted(id)));
     }
 
     @Test

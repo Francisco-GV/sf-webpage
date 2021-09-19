@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Profile("map")
@@ -29,6 +31,13 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
                 .filter(owner -> owner.getLastName().equals(lastName))
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public Set<Owner> findAllByLastName(String lastName) {
+        return map.values().stream()
+                .filter(owner -> owner.getLastName().equals(lastName))
+                .collect(Collectors.toSet());
     }
 
     @Override

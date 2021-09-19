@@ -27,6 +27,11 @@ public class OwnerJpaService implements OwnerService {
     }
 
     @Override
+    public Set<Owner> findAllByLastName(String lastName) {
+        return ownerRepository.findAllByLastName(lastName);
+    }
+
+    @Override
     public Set<Owner> findAll() {
         Set<Owner> owners = new HashSet<>();
 
