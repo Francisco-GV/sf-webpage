@@ -2,16 +2,18 @@
       th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 <body>
     <h2>Find Owners</h2>
-    <form th:object="${owner}" th:action="@{/owners}" method="get" class="form-horizontal" id="search-owner-form">
+    <form class="form-horizontal" id="search-owner-form"
+          th:object="${owner}" th:action="@{/owners}" method="get">
         <div class="form-group">
             <div class="control-group" id="lastNameGroup">
-                <label class="col-sm-2 control-label">Last name </label>
+                <label class="col-sm-2 control-label">Last name</label>
                 <div class="col-sm-10">
-                    <input class="form-control" th:field="*{lastName}" size="30" maxlength="80"/>
+                    <label for="lastname" style="display:none"></label>
+                    <input id="lastname" class="form-control" th:field="*{lastName}" size="30" maxlength="80"/>
                     <span class="help-inline">
-                        <div th:if="${#fields.hasAnyErrors()}">
+                        <th:block th:if="${#fields.hasAnyErrors()}">
                             <p th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</p>
-                        </div>
+                        </th:block>
                     </span>
                 </div>
             </div>
