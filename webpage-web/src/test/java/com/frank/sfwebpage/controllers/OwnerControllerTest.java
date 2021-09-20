@@ -92,4 +92,58 @@ class OwnerControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.notNullValue()))
                 .andExpect(MockMvcResultMatchers.model().attribute("owner", Matchers.hasProperty("id", Matchers.is(id))));
     }
+
+    @Test
+    void initCreationForm() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+    }
+
+    @Test
+    void processCreationForm() throws Exception {
+        Owner owner = new Owner();
+        owner.setId(1L);
+
+        Mockito.when(ownerService.save(Mockito.any())).thenReturn(owner);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/new"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/1"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+
+        Mockito.verify(ownerService, Mockito.times(1)).save(Mockito.any());
+    }
+
+    @Test
+    void initUpdateOwnerForm() throws Exception {
+        Owner owner = new Owner();
+        owner.setId(1L);
+
+        Mockito.when(ownerService.findById(Mockito.anyLong())).thenReturn(owner);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/owners/1/edit"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("owners/createOrUpdateOwnerForm"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+
+        Mockito.verifyNoMoreInteractions(ownerService);
+    }
+
+    @Test
+    void processUpdateOwnerForm() throws Exception {
+        Owner owner = new Owner();
+        owner.setId(1L);
+
+        Mockito.when(ownerService.save(Mockito.any())).thenReturn(owner);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/edit"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/1"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("owner"));
+
+        Mockito.verify(ownerService, Mockito.times(1)).save(Mockito.any());
+
+    }
 }
