@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -75,7 +74,7 @@ public class OwnerController {
     }
 
     @PostMapping("/new")
-    public String processCreationForm(@Validated Owner owner, BindingResult bindingResult) {
+    public String processCreationForm(Owner owner, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "owners/createOrUpdateOwnerForm";
         }
@@ -91,7 +90,7 @@ public class OwnerController {
     }
 
     @PostMapping("/{id}/edit")
-    public String processUpdateOwnerForm(@PathVariable Long id, @Validated Owner owner, BindingResult bindingResult) {
+    public String processUpdateOwnerForm(@PathVariable Long id, Owner owner, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "owners/createOrUpdateOwnerForm";
         }
