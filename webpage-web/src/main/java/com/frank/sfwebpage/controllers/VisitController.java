@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/owners/*/pets/{petId}/visits")
 @SuppressWarnings("MVCPathVariableInspection")
 public class VisitController {
     private final VisitService visitService;
@@ -35,7 +37,7 @@ public class VisitController {
         return petService.findById(petId);
     }
 
-    @GetMapping("/owners/*/pets/{petId}/visits/new")
+    @GetMapping("/new")
     public String initNewVisitForm(@ModelAttribute Pet pet, Model model) {
         Visit visit = new Visit();
         visit.setPet(pet);
@@ -43,7 +45,7 @@ public class VisitController {
         return "pets/createOrUpdateVisitForm";
     }
 
-    @PostMapping("/owners/*/pets/{petId}/visits/new")
+    @PostMapping("/new")
     public String processNewVisitForm(@ModelAttribute Pet pet, @ModelAttribute Visit visit, BindingResult result, Model model) {
         visit.setPet(pet);
 

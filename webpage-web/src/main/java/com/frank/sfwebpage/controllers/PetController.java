@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/owners/{ownerId}")
+@RequestMapping("/owners/{ownerId}/pets")
 @SuppressWarnings("MVCPathVariableInspection")
 public class PetController {
 
@@ -50,7 +50,7 @@ public class PetController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @GetMapping("/pets/new")
+    @GetMapping("/new")
     public String initCreationForm(@ModelAttribute Owner owner, Model model) {
         Pet pet = new Pet();
         pet.setOwner(owner);
@@ -58,13 +58,13 @@ public class PetController {
         return "pets/createOrUpdatePetForm";
     }
 
-    @GetMapping("/pets/{petId}/edit")
+    @GetMapping("/{petId}/edit")
     public String initUpdateForm(@PathVariable Long petId, Model model) {
         model.addAttribute("pet", petService.findById(petId));
         return "pets/createOrUpdatePetForm";
     }
 
-    @PostMapping({"/pets/{petId}/edit", "/pets/new"})
+    @PostMapping({"/new", "/{petId}/edit"})
     public String processCreationUpdateForm(@ModelAttribute Owner owner, @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
         pet.setName(pet.getName().trim());
 
