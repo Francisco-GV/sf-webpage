@@ -22,6 +22,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/owners/{ownerId}")
+@SuppressWarnings("MVCPathVariableInspection")
 public class PetController {
 
     private final PetService petService;
@@ -57,37 +58,29 @@ public class PetController {
         return "pets/createOrUpdatePetForm";
     }
 
-    @PostMapping("/pets/new")
-    public String processCreationForm(@ModelAttribute Owner owner, Pet pet, BindingResult bindingResult, Model model) {
-        if (StringUtils.hasLength(pet.getName()) && pet.isNew() && owner.getPet(pet.getName(), true) != null) {
-            bindingResult.rejectValue("name", "duplicate", "already exists");
-        }
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("pet", pet);
-            return "pets/createOrUpdatePetForm";
-        }
-
-        pet.setOwner(owner);
-        petService.save(pet);
-
-        return "redirect:/owners/%d".formatted(owner.getId());
-    }
-
     @GetMapping("/pets/{petId}/edit")
     public String initUpdateForm(@PathVariable Long petId, Model model) {
         model.addAttribute("pet", petService.findById(petId));
         return "pets/createOrUpdatePetForm";
     }
 
-    @PostMapping("/pets/{petId}/edit")
-    public String processUpdateForm(Pet pet, BindingResult bindingResult, Owner owner, Model model) {
+    @PostMapping({"/pets/{petId}/edit", "/pets/new"})
+    public String processCreationUpdateForm(@ModelAttribute Owner owner, Pet pet, BindingResult bindingResult, Model model) {
+        pet.setName(pet.getName().trim());
+
+        if (!StringUtils.hasLength(pet.getName())) {
+            bindingResult.rejectValue("name", "required", "name is required");
+        } else if (petService.findByOwnerAndName(owner, pet.getName())  != null) {
+            bindingResult.rejectValue("name", "duplicate", "already exists");
+        }
+
+        pet.setOwner(owner);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("pet", pet);
             return "pets/createOrUpdatePetForm";
         }
 
-        pet.setOwner(owner);
         petService.save(pet);
 
         return "redirect:/owners/%d".formatted(owner.getId());

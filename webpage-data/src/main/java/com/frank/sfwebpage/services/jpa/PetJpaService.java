@@ -1,5 +1,6 @@
 package com.frank.sfwebpage.services.jpa;
 
+import com.frank.sfwebpage.model.Owner;
 import com.frank.sfwebpage.model.Pet;
 import com.frank.sfwebpage.repositories.PetRepository;
 import com.frank.sfwebpage.services.PetService;
@@ -48,5 +49,10 @@ public class PetJpaService implements PetService {
     @Override
     public void deleteById(Long id) {
         petRepository.deleteById(id);
+    }
+
+    @Override
+    public Pet findByOwnerAndName(Owner owner, String name) {
+        return petRepository.findByOwnerAndNameIgnoreCase(owner, name).orElse(null);
     }
 }
