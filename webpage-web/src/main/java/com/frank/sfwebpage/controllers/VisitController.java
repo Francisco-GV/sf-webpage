@@ -30,23 +30,25 @@ public class VisitController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @ModelAttribute("visit")
-    public Visit loadPetWithVisit(@PathVariable("petId") Long petId, Model model) {
-        Pet pet = petService.findById(petId);
-        model.addAttribute("pet", pet);
-        Visit visit = new Visit();
-        visit.setPet(pet);
-        return visit;
+    @ModelAttribute("pet")
+    public Pet findPet(@PathVariable("petId") Long petId) {
+        return petService.findById(petId);
     }
 
     @GetMapping("/owners/*/pets/{petId}/visits/new")
-    public String initNewVisitForm(@PathVariable("petId") int petId) {
+    public String initNewVisitForm(@ModelAttribute Pet pet, Model model) {
+        Visit visit = new Visit();
+        visit.setPet(pet);
+        model.addAttribute("visit", visit);
         return "pets/createOrUpdateVisitForm";
     }
 
-    @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
-    public String processNewVisitForm(@ModelAttribute Pet pet, Visit visit, BindingResult result) {
+    @PostMapping("/owners/*/pets/{petId}/visits/new")
+    public String processNewVisitForm(@ModelAttribute Pet pet, @ModelAttribute Visit visit, BindingResult result, Model model) {
+        visit.setPet(pet);
+
         if (result.hasErrors()) {
+            model.addAttribute("visit", visit);
             return "pets/createOrUpdateVisitForm";
         }
 

@@ -65,7 +65,7 @@ public class PetController {
     }
 
     @PostMapping({"/pets/{petId}/edit", "/pets/new"})
-    public String processCreationUpdateForm(@ModelAttribute Owner owner, Pet pet, BindingResult bindingResult, Model model) {
+    public String processCreationUpdateForm(@ModelAttribute Owner owner, @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
         pet.setName(pet.getName().trim());
 
         if (!StringUtils.hasLength(pet.getName())) {
