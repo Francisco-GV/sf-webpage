@@ -66,7 +66,9 @@ public class PetController {
 
     @PostMapping({"/new", "/{petId}/edit"})
     public String processCreationUpdateForm(@ModelAttribute Owner owner, @ModelAttribute Pet pet, BindingResult bindingResult, Model model) {
-        pet.setName(pet.getName().trim());
+        if (pet.getName() != null) {
+            pet.setName(pet.getName().trim());
+        }
 
         if (!StringUtils.hasLength(pet.getName())) {
             bindingResult.rejectValue("name", "required", "name is required");
