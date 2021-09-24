@@ -80,7 +80,8 @@ class PetControllerTest {
         Mockito.when(ownerService.findById(Mockito.anyLong())).thenReturn(owner);
         Mockito.when(petTypeService.findAll()).thenReturn(petTypes);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/pets/new"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/pets/new")
+                        .param("name", "some name"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/1"));
 
@@ -106,7 +107,8 @@ class PetControllerTest {
         Mockito.when(ownerService.findById(Mockito.anyLong())).thenReturn(owner);
         Mockito.when(petTypeService.findAll()).thenReturn(petTypes);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/pets/1/edit"))
+        mockMvc.perform(MockMvcRequestBuilders.post("/owners/1/pets/1/edit")
+                        .param("name", "some name"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/owners/1"));
     }
