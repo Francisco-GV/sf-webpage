@@ -5,14 +5,14 @@
     <parent>
         <artifactId>sf-webpage</artifactId>
         <groupId>com.frank</groupId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
     <dependencies>
